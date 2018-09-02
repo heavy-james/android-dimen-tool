@@ -1,7 +1,5 @@
 package command;
 
-import util.BinaryUtils;
-
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,23 +60,22 @@ public class SourceReplacer {
                     line = xMatcher.group(2) + String.valueOf(translatedDimen) + xMatcher.group(4);
                     System.out.println("replace x : " + line);
                     lineChanged = true;
-                } else {
-
-                    // 创建 Pattern y对象
-                    String patternY = "((\\s*\\S*@dimen/y)(\\d*)(\\S*\\s*))";
-                    // 创建 Pattern 对象
-                    Pattern y = Pattern.compile(patternY);
-                    // 现在创建 matcher 对象
-                    Matcher yMatcher = y.matcher(line);
-                    if (yMatcher.find()) {
-                        int dimen = Integer.valueOf(yMatcher.group(3));
-                        int translatedDimen = (int) (dimen * scaleY + 0.5);
-                        line = yMatcher.group(2) + String.valueOf(translatedDimen) + yMatcher.group(4);
-                        System.out.println("replace y : " + line);
-                        lineChanged = true;
-                    }
-
                 }
+
+                // 创建 Pattern y对象
+                String patternY = "((\\s*\\S*@dimen/y)(\\d*)(\\S*\\s*))";
+                // 创建 Pattern 对象
+                Pattern y = Pattern.compile(patternY);
+                // 现在创建 matcher 对象
+                Matcher yMatcher = y.matcher(line);
+                if (yMatcher.find()) {
+                    int dimen = Integer.valueOf(yMatcher.group(3));
+                    int translatedDimen = (int) (dimen * scaleY + 0.5);
+                    line = yMatcher.group(2) + String.valueOf(translatedDimen) + yMatcher.group(4);
+                    System.out.println("replace y : " + line);
+                    lineChanged = true;
+                }
+
 
                 if (lineChanged) {
                     raf.seek(lastPoint);

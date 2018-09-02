@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 
 public class Main {
 
+    static final Object mCountLock = new Object();
     static String path = ".";
     static String positiveFilter;
     static String negativeFilter;
@@ -25,10 +26,6 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.print("start!\n");
-
-        String command = "java -jar TextReplace.jar -p /Users/heavy/workspace/topband/topband_running -f .xml -s .java -o 1280 600 -t 1920 1080 -j 5";
-
-        //args = command.split(" ");
 
         if (args == null) {
             return;
@@ -56,21 +53,14 @@ public class Main {
             }
         }
 
-        // 按指定模式在字符串查找
-        //String line = "android:layout_width=\"@dimen/x_100\"";
-        //String pattern = "\\*(@dimen/x_)(\\d*)";
-
-        System.out.print("path : " + new File(path).getAbsolutePath());
-        System.out.print("\njobs : " + jobs);
-        System.out.print("\npositiveFilter : " + positiveFilter);
-        System.out.print("\nnegativeFilter : " + negativeFilter);
-        System.out.print("\noriginWidth : " + originWidth);
-        System.out.print("\noriginHeight : " + originHeight);
-        System.out.print("\ntargetWidth : " + targetWidth);
-        System.out.print("\ntargetHeight : " + targetHeight);
-        System.out.print("\n");
-
-        Executors.newFixedThreadPool(jobs);
+        System.out.println("path : " + new File(path).getAbsolutePath());
+        System.out.println("jobs : " + jobs);
+        System.out.println("positiveFilter : " + positiveFilter);
+        System.out.println("negativeFilter : " + negativeFilter);
+        System.out.println("originWidth : " + originWidth);
+        System.out.println("originHeight : " + originHeight);
+        System.out.println("targetWidth : " + targetWidth);
+        System.out.println("targetHeight : " + targetHeight);
 
         File file = new File(path);
 
@@ -86,14 +76,17 @@ public class Main {
         while (sourceCreator.hasNextFile()) {
             File executeFile = sourceCreator.nextFile();
             executorService.execute(() -> {
-                jobCount ++;
+                synchronized (mCountLock){
+                    jobCount ++;
+                }
                 SourceReplacer sourceReplacer = new SourceReplacer(originWidth, originHeight, targetWidth, targetHeight);
                 sourceReplacer.replace(executeFile);
-                jobCount --;
+                synchronized (mCountLock){
+                    jobCount --;
+                }
                 if(shouldFinish && jobCount == 0){
                     executorService.shutdown();
                 }
-
             });
         }
         shouldFinish = true;
