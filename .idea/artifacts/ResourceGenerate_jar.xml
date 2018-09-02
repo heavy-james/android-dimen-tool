@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="ResourceGenerate:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ResourceGenerate_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ResourceGenerate.jar">
+        <element id="module-output" name="ResourceGenerate" />
+      </element>
+    </root>
+  </artifact>
+</component>

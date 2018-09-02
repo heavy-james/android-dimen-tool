@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TextReplace:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TextReplace_jar</output-path>
+    <root id="archive" name="TextReplace.jar">
+      <element id="module-output" name="TextReplace" />
+    </root>
+  </artifact>
+</component>
