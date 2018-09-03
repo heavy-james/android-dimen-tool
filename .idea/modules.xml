@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Dp2Lay/Dp2Lay.iml" filepath="$PROJECT_DIR$/Dp2Lay/Dp2Lay.iml" />
       <module fileurl="file://$PROJECT_DIR$/ResourceGenerate/ResourceGenerate.iml" filepath="$PROJECT_DIR$/ResourceGenerate/ResourceGenerate.iml" />
       <module fileurl="file://$PROJECT_DIR$/TextReplace.iml" filepath="$PROJECT_DIR$/TextReplace.iml" />
     </modules>

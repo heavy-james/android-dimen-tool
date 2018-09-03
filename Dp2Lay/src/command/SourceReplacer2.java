@@ -40,9 +40,7 @@ public class SourceReplacer2 {
             String line = null;
             while ((line = raf.readLine()) != null) {
 
-                //System.out.println("read line : " + line);
-
-                String originLine = "[" + line + "]";
+                long originalLength = line.length();
 
                 final long point = raf.getFilePointer();
 
@@ -57,23 +55,23 @@ public class SourceReplacer2 {
                 Matcher matcher = pattern.matcher(line);
 
                 if (matcher.find()) {
-                    if(line.contains("width") || line.contains("left") || line.contains("right") || line.contains("start") || line.contains("end")){
+                    if(line.contains("width") || line.contains("Width") || line.contains("Left") || line.contains("Right") || line.contains("tart") || line.contains("End")){
                         line = matcher.group(1) + "x" + matcher.group(3);
                     }else {
                         line = matcher.group(1) + "y" + matcher.group(3);
                     }
-                    System.out.println("replace : " + line);
                     lineChanged = true;
+                    System.out.println("replace : " + line);
                 }
 
-
                 if (lineChanged) {
+                    int lineLength = line.length();
+                    StringBuilder stringBuilder = new StringBuilder(line);
+                    for(int i = 0; i< originalLength - lineLength; i++){
+                        stringBuilder.append(" ");
+                    }
                     raf.seek(lastPoint);
-                    raf.writeBytes(line);
-
-                    //String targetLine = "[" + line + "]";
-                    //System.out.println("replace : " + originLine);
-                    //System.out.println("replace : " + targetLine);
+                    raf.writeBytes(stringBuilder.toString());
                 }
                 lastPoint = point;
             }

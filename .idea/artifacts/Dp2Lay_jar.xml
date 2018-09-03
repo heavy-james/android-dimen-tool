@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Dp2Lay:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dp2Lay_jar</output-path>
+    <root id="archive" name="Dp2Lay.jar">
+      <element id="module-output" name="Dp2Lay" />
+      <element id="module-output" name="TextReplace" />
+    </root>
+  </artifact>
+</component>

@@ -38,9 +38,7 @@ public class SourceReplacer {
             String line = null;
             while ((line = raf.readLine()) != null) {
 
-                //System.out.println("read line : " + line);
-
-                String originLine = "[" + line + "]";
+                int originalLength = line.length();
 
                 final long point = raf.getFilePointer();
 
@@ -78,6 +76,13 @@ public class SourceReplacer {
 
 
                 if (lineChanged) {
+
+                    int lineLength = line.length();
+                    StringBuilder stringBuilder = new StringBuilder(line);
+                    for(int i = 0; i< originalLength - lineLength; i++){
+                        stringBuilder.append(" ");
+                    }
+
                     raf.seek(lastPoint);
                     raf.writeBytes(line);
 

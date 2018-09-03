@@ -4,6 +4,8 @@ import command.SourceReplacer;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -27,7 +29,11 @@ public class Main {
 
         System.out.print("start!\n");
 
-        if (args == null) {
+        String command = "java -jar TextReplace.jar -p ./test -f .xml -s .java -o 1280 600 -t 1920 1080";
+
+        //args = command.split(" ");
+
+        if (args == null || args.length == 0) {
             return;
         }
 

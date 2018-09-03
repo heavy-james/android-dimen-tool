@@ -1,13 +1,11 @@
 import command.SourceCreator;
-import command.SourceReplacer;
+import command.SourceReplacer2;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Main {
+public class MainDp2Lay {
 
     static final Object mCountLock = new Object();
     static String path = ".";
@@ -27,25 +25,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.print("start!\n");
 
-        String source  = "        android:layout_marginRight=\"@dimen/dp100\"";
+        String command = "java -jar TextReplace.jar -p ./test -f .xml -s .java -j 2";
 
-        String patternString = "(\\s*\\S*@dimen/)(dp)(\\d*\\S*\\s*)";
-
-        // 创建 Pattern x对象
-        Pattern pattern = Pattern.compile(patternString);
-
-        // 现在创建 matcher 对象
-        Matcher matcher = pattern.matcher(source);
-
-        if (matcher.find()) {
-            System.out.println("group 0 : " + matcher.group(0));
-            System.out.println("group 1 : " + matcher.group(1));
-            System.out.println("group 2 : " + matcher.group(2));
-            System.out.println("group 3 : " + matcher.group(3));
-        }
-
+        //args = command.split(" ");
 
         if (args == null || args.length == 0) {
             return;
@@ -60,13 +43,7 @@ public class Main {
                 positiveFilter = args[++i];
             } else if ("-s".equals(arg)) {
                 negativeFilter = args[++i];
-            } else if ("-o".equals(arg)) {
-                originWidth = Integer.valueOf(args[++i]);
-                originHeight = Integer.valueOf(args[++i]);
-            } else if ("-t".equals(arg)) {
-                targetWidth = Integer.valueOf(args[++i]);
-                targetHeight = Integer.valueOf(args[++i]);
-            } else if ("-j".equals(arg)) {
+            } if ("-j".equals(arg)) {
                 jobs = Integer.valueOf(args[++i]);
             } else {
                 i++;
@@ -77,10 +54,7 @@ public class Main {
         System.out.println("jobs : " + jobs);
         System.out.println("positiveFilter : " + positiveFilter);
         System.out.println("negativeFilter : " + negativeFilter);
-        System.out.println("originWidth : " + originWidth);
-        System.out.println("originHeight : " + originHeight);
-        System.out.println("targetWidth : " + targetWidth);
-        System.out.println("targetHeight : " + targetHeight);
+
 
         File file = new File(path);
 
@@ -99,7 +73,7 @@ public class Main {
                 synchronized (mCountLock){
                     jobCount ++;
                 }
-                SourceReplacer sourceReplacer = new SourceReplacer(originWidth, originHeight, targetWidth, targetHeight);
+                SourceReplacer2 sourceReplacer = new SourceReplacer2(originWidth, originHeight, targetWidth, targetHeight);
                 sourceReplacer.replace(executeFile);
                 synchronized (mCountLock){
                     jobCount --;
