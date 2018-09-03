@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginTop="@dimen/x800"
         android:layout_marginBottom="@dimen/dp16"
         android:gravity="center"
         android:text="@string/faults_prompt"
