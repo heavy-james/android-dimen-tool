@@ -2,17 +2,17 @@ import command.SourceCreator;
 import command.SourceReplacer;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
 
     static final Object mCountLock = new Object();
     static String path = ".";
-    static String positiveFilter;
-    static String negativeFilter;
+    static List<String> positiveFilter;
+    static List<String> negativeFilter;
     static int originWidth;
     static int originHeight;
     static int targetWidth;
@@ -37,15 +37,18 @@ public class Main {
             return;
         }
 
+        positiveFilter = new ArrayList<>();
+        negativeFilter = new ArrayList<>();
+
         for (int i = 0; i < args.length; ) {
             String arg = args[i];
 
             if ("-p".equals(arg)) {
                 path = args[++i];
             } else if ("-f".equals(arg)) {
-                positiveFilter = args[++i];
+                positiveFilter.add(args[++i]);
             } else if ("-s".equals(arg)) {
-                negativeFilter = args[++i];
+                negativeFilter.add(args[++i]);
             } else if ("-o".equals(arg)) {
                 originWidth = Integer.valueOf(args[++i]);
                 originHeight = Integer.valueOf(args[++i]);
